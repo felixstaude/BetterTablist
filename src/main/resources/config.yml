@@ -1,0 +1,94 @@
+# ┌────────────────────────────────────────────┐
+# │        ⚙️ TablistCustomizer Config         │
+# └────────────────────────────────────────────┘
+
+modules:
+  animation: true
+  random_order: true
+  easter_eggs: false
+  personal_tablist: true
+
+server_tag: citybuild
+global_personal_storage_path: "../../network/tablists/"
+
+# Enable animated header?
+use_animated_header: true
+
+# Change header frame every X ticks (20 = 1 second)
+animated_header_interval_ticks: 100
+
+# Show header in random order?
+animated_header_random_order: false
+
+
+# Enable animated footer?
+use_animated_footer: true
+
+# Change footer frame every X ticks
+animated_footer_interval_ticks: 200
+
+# Show footer in random order?
+animated_footer_random_order: true
+
+
+# How often should the tablist update for all players (in ticks)?
+update_interval_ticks: 10
+
+
+# ┌────────────────────────────────────────────┐
+# │             🧩 Animated Header             │
+# └────────────────────────────────────────────┘
+
+animated_header:
+  -
+    - "&f"
+    - "&l&6Welcome, &e{player}&6! 💎"
+    - "&7World: %tablist_world%"
+    - "&aCustom Time: &f%tablist_time%"
+    - '&f'
+  -
+    - "&f"
+    - "&b&lDon't forget to vote! 🎉"
+    - "&eUse &f/vote &eto earn rewards."
+    - "&f"
+  -
+    - "&f"
+    - "&d&nJoin our Discord! 🔗"
+    - "&9discord.gg/yourserver"
+    - "&f"
+
+# ┌────────────────────────────────────────────┐
+# │             🧩 Animated Footer             │
+# └────────────────────────────────────────────┘
+
+animated_footer:
+  -
+    - "&f"
+    - "&6Use &f/daily &6to claim your reward! 🏆"
+    - "&7Available every 24 hours."
+    - "&f"
+  -
+    - "&f"
+    - "&aFollow us on socials! 📱"
+    - "&f@YourServer on everything."
+    - "&f"
+
+# ┌────────────────────────────────────────────┐
+# │          🪧 Static Fallback Header         │
+# └────────────────────────────────────────────┘
+
+header:
+  - "&f"
+  - "&aOnline: &b{online} 👥"
+  - "&7Your Playtime: &f{time} ⏱️"
+  - "&f"
+
+# ┌────────────────────────────────────────────┐
+# │          🪧 Static Fallback Footer         │
+# └────────────────────────────────────────────┘
+
+footer:
+  - "&f"
+  - "&eWebsite: &fwww.yourserver.com 🌐"
+  - "&eDiscord: &fdiscord.gg/yourserver 🔗"
+  - "&f"
