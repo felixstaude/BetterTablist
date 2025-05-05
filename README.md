@@ -20,7 +20,7 @@ A powerful and flexible Minecraft plugin for creating animated and personalized 
 
 ### 1. Plugin Installation
 
-- Download the plugin and place the `BetterTablist.jar` file into your server's `plugins/` folder.
+- [Download](https://github.com/felixstaude/BetterTablist/releases) the plugin and place the `BetterTablist.jar` file into your server's `plugins/` folder.
 - Restart your server.
 - After the restart, all necessary configuration files will be generated automatically.
 
