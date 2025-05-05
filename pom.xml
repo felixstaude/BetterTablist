@@ -43,7 +43,7 @@
                         </goals>
                         <configuration>
                             <!-- Zielordner festlegen -->
-                            <outputFile>${project.basedir}/TestServer/plugins/${project.artifactId}.jar</outputFile>
+                            <outputFile>${project.basedir}/server/plugins/${project.artifactId}.jar</outputFile>
                         </configuration>
                     </execution>
                 </executions>

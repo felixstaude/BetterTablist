@@ -1,22 +1,17 @@
-name: TablistPlugin
+name: BetterTablist
 version: 1.0
 main: org.felixstaude.tablist.core.TablistCustomizer
 api-version: 1.20
 author: felixstaude
 softdepend: [PlaceholderAPI]
+
 commands:
   tablistreload:
-    description: reloads config.yml of tablist plugin
+    description: Reloads the tablist plugin config
     usage: /<command>
     permission: tablist.reload
-  tablist:
-    description: Manage your personal tablist
-    usage: /<command> <subcommand>
-    permission: tablist.personal
+
 permissions:
   tablist.reload:
-    description: allows to reload config.yml
-    default: op
-  tablist.personal:
-    description: allows users to config their own tablist
+    description: Allows reloading of the tablist config
     default: op

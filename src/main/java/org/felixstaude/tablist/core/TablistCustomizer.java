@@ -4,7 +4,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.felixstaude.tablist.commands.TablistReloadCommand;
-import org.felixstaude.tablist.commands.TablistSettingsCommand;
 import org.felixstaude.tablist.placeholders.TablistExpansion;
 
 import java.io.File;
@@ -21,16 +20,7 @@ public final class TablistCustomizer extends JavaPlugin {
         saveDefaultConfig();
         reloadConfig();
 
-        // 🔽 Lade globale Konfiguration für personalisierte Tablisten
-        File globalPersonal = new File(new File(getDataFolder().getParentFile().getParent(), "../../network/tablist"), "global.yml");
-
-        if (!globalPersonal.exists()) {
-            getLogger().info("global.yml not found, creating default...");
-            GlobalConfigUtil.createDefaultGlobalConfig(globalPersonal);
-        }
-
-        TablistGlobalPersonalConfig.load(globalPersonal);
-
+        GlobalConfigUtil.loadMappingsAndDefaults();
 
         if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
             new TablistExpansion().register();
@@ -40,8 +30,6 @@ public final class TablistCustomizer extends JavaPlugin {
 
         registerConfigWatcher();
         getCommand("tablistreload").setExecutor(new TablistReloadCommand());
-        getCommand("tablist").setExecutor(new TablistSettingsCommand());
-        getCommand("tablist").setTabCompleter(new TablistSettingsCommand());
 
         getServer().getPluginManager().registerEvents(new TablistManager(), this);
         PlaceholderRegistry.registerDefaults();

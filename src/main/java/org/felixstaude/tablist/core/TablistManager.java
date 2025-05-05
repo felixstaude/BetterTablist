@@ -1,6 +1,5 @@
 package org.felixstaude.tablist.core;
 
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -18,34 +17,11 @@ public class TablistManager implements Listener {
     private static int currentFooterIndex = 0;
 
     public static void updateTablist(Player player) {
-        FileConfiguration config = TablistCustomizer.getInstance().getConfig();
-
-        if (!TablistCustomizer.getInstance().isModuleEnabled("personal_tablist")) {
-            applyStandardTablist(player);
-            return;
-        }
-
-        boolean enabledInGlobal = TablistGlobalPersonalConfig.isPersonalTablistAllowed();
-        String serverTag = config.getString("server_tag");
-
-        if (enabledInGlobal && TablistGlobalPersonalConfig.isAllowedOnTag(serverTag)
-                && PersonalTablistManager.hasCustomTablist(player)) {
-
-            List<String> header = PersonalTablistManager.getHeader(player);
-            List<String> footer = PersonalTablistManager.getFooter(player);
-
-            String headerString = header == null ? "" : TablistAPI.parse(String.join("\n", header), player);
-            String footerString = footer == null ? "" : TablistAPI.parse(String.join("\n", footer), player);
-
-            player.setPlayerListHeaderFooter(headerString, footerString);
-            return;
-        }
-
         applyStandardTablist(player);
     }
 
     public static void tickAnimations() {
-        FileConfiguration config = TablistCustomizer.getInstance().getConfig();
+        FileConfiguration config = getEffectiveConfig();
 
         int headerInterval = config.getInt("animated_header_interval_ticks", 40);
         int footerInterval = config.getInt("animated_footer_interval_ticks", 40);
@@ -82,7 +58,7 @@ public class TablistManager implements Listener {
 
     @SuppressWarnings("unchecked")
     public static String getCurrentHeader(Player player) {
-        FileConfiguration config = TablistCustomizer.getInstance().getConfig();
+        FileConfiguration config = getEffectiveConfig();
 
         if (config.getBoolean("use_animated_header")) {
             List<?> raw = config.getList("animated_header");
@@ -105,7 +81,7 @@ public class TablistManager implements Listener {
 
     @SuppressWarnings("unchecked")
     public static String getCurrentFooter(Player player) {
-        FileConfiguration config = TablistCustomizer.getInstance().getConfig();
+        FileConfiguration config = getEffectiveConfig();
 
         if (config.getBoolean("use_animated_footer")) {
             List<?> raw = config.getList("animated_footer");
@@ -139,4 +115,8 @@ public class TablistManager implements Listener {
         player.setPlayerListHeaderFooter(header, footer);
     }
 
+    private static FileConfiguration getEffectiveConfig() {
+        String tag = TablistCustomizer.getInstance().getConfig().getString("server_tag");
+        return GlobalConfigUtil.getConfigForTagOrFallback(tag);
+    }
 }
