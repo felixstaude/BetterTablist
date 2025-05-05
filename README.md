@@ -1,99 +1,126 @@
-Tablist Plugin - Developer Documentation
-========================================
+# BetterTablist
 
-Author: Felix Staude
-Version: 1.0
-Minecraft API: 1.20+
-Soft Dependencies: PlaceholderAPI
+A powerful and flexible Minecraft plugin for creating animated and personalized tablists across all your servers — using shared global configurations.
 
-----------------------------------------
-📁 Plugin Structure
-----------------------------------------
+---
 
-- core/
-  - TablistCustomizer.java     → Main plugin class (onEnable, config watcher, modules)
-  - TablistAPI.java            → Placeholder parsing (custom + PAPI)
-  - PlaceholderRegistry.java   → Built-in placeholder registration
+## ✅ Features
 
-- tab/
-  - TablistManager.java        → Controls header/footer rendering and animation
+- Animated headers and footers
+- Global config system for entire networks
+- Server tag-based configuration selection
+- Smooth integration with PlaceholderAPI
+- Simple reload command
+- Custom placeholders (`{player}`, `{online}`, `{time}`, etc.)
+- Randomized animation options
 
-- commands/
-  - TablistReloadCommand.java  → /tablistreload command (reloads config and updates tablist)
+---
 
-- placeholders/
-  - TablistExpansion.java      → PlaceholderAPI Expansion (e.g. %tablist_world%)
+## 🚀 Getting Started
 
-----------------------------------------
-🛠 Features
-----------------------------------------
+### 1. Plugin Installation
 
-✔ Animated Tablist header/footer (configurable tick delay)
-✔ Random order for animations (optional)
-✔ Support for multiline header/footer frames
-✔ Fallback header/footer if animation is disabled
-✔ PlaceholderAPI integration (%tablist_*% and third-party expansions)
-✔ Own custom placeholders with {curly} syntax
-✔ Modular feature system via "modules:" section in config.yml
-✔ Auto reload if config file changes
-✔ /tablistreload command for manual reload
+- Download the plugin and place the `BetterTablist.jar` file into your server's `plugins/` folder.
+- Restart your server.
+- After the restart, all necessary configuration files will be generated automatically.
 
-----------------------------------------
-⚙ config.yml Overview
-----------------------------------------
+---
 
-modules:
-  animation: true             # Enables tick-based animation
-  random_order: true          # Enables random frame selection
-  easter_eggs: false          # Reserved for future features
+### 2. Configuration
 
-use_animated_header: true     # Enables animated header frames
+#### Local config (config.yml)
+
+Your local `config.yml` contains the default configuration. It also defines the `server_tag` and the `global_config` path:
+
+```yaml
+server_tag: citybuild
+global_config: "../BetterTablistGlobal/"
+```
+
+This means your plugin will try to load a shared global file for the tag `citybuild`, such as `citybuild.yml` in the folder `../BetterTablistGlobal/`.
+
+#### Global config mapping (globalConfig.yml)
+
+Inside your global config folder, you’ll find a `globalConfig.yml` file with the structure:
+
+```yaml
+tag_mappings:
+  citybuild: citybuild.yml
+  bedwars: minigame.yml
+  skywars: minigame.yml
+```
+
+Each server tag will load the assigned file. Multiple tags can share the same configuration.
+
+#### Fallback template
+
+If no server tag is found or the config file is missing, a fallback file `template.yml` will be used.
+
+---
+
+## 📋 Example: citybuild.yml
+
+```yaml
+use_animated_header: true
 animated_header_interval_ticks: 100
-animated_header_random_order: false
-
-use_animated_footer: true
-animated_footer_interval_ticks: 200
-animated_footer_random_order: true
-
-update_interval_ticks: 10     # Update all player tablists every X ticks
-
 animated_header:
-  - ["Line 1", "Line 2", "Line 3"]
-  - ["Other Header Line 1", "Line 2"]
-
-animated_footer:
-  - ["Line 1", "Line 2"]
-  - ["Other Footer Line 1"]
-
+  -
+    - "&aWelcome, {player}!"
+    - "&7Players online: {online}"
+    - "&7Time: {time}"
 header:
-  - "Static fallback header line"
+  - "&6Fallback Header"
 
+use_animated_footer: false
 footer:
-  - "Static fallback footer line"
+  - "&eJoin our Discord: discord.gg/example"
+```
 
-----------------------------------------
-🔌 PAPI Placeholder Usage
-----------------------------------------
+---
 
-Register new placeholder:
-  TablistAPI.registerPlaceholder("key", player -> "value");
+## 🔧 PlaceholderAPI Support
 
-Supports:
-  - %tablist_world% → World name of the player
-  - %tablist_hello% → Simple hello message
-  - Your own logic
+Make sure PlaceholderAPI is installed. The plugin will automatically register custom placeholders.
 
-----------------------------------------
-✅ Permissions
-----------------------------------------
+You can use placeholders such as:
 
-tablist.reload → Allows usage of /tablistreload command
+- `{player}` — Player name
+- `{online}` — Number of online players
+- `%tablist_world%` — Player's world
+- `%tablist_hello%` — Greeting
 
-----------------------------------------
-💡 Future Ideas
-----------------------------------------
+---
 
-- Global config support for networks
-- GUI config editor
-- Auto-enable modules via GUI or command
-- More built-in placeholders (ping, tps, etc)
+## 🔁 Reloading
+
+Use `/tablistreload` to reload your configuration while the server is running.
+
+Permission required: `tablist.reload`
+
+---
+
+## 🧪 Compatibility Table
+
+| Minecraft Version | Plugin Version | Status     |
+|-------------------|----------------|------------|
+| 1.21.4            | v1.0           | ✅ Tested   |
+| future            | TBD            | ⏳ Planned  |
+
+---
+
+## ⚠️ Notes
+
+- If a global config is missing or invalid, a warning will appear at most every 2 minutes to keep logs clean.
+- The fallback config `template.yml` will be generated automatically if missing.
+- You can define your own placeholders and use them freely in all tablist fields.
+
+---
+
+## 💬 Support & Feedback
+
+- Open an issue here on GitHub
+---
+
+## 📜 License
+
+MIT — use this plugin freely, but don't forget to give credit 🙂
